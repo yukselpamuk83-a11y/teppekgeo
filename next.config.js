@@ -9,9 +9,10 @@ const nextConfig = {
   images: {
     unoptimized: true
   },
-  // Use standard build for Cloudflare Pages
-  experimental: {
-    runtime: 'nodejs',
+  // Disable caching for smaller build size
+  webpack: (config) => {
+    config.cache = false;
+    return config;
   }
 };
 
