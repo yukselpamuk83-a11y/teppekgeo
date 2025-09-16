@@ -1,0 +1,9 @@
+# Cloudflare Pages redirects
+/admin/* /auth/signin 302
+/dashboard/* /auth/signin 302
+
+# API fallbacks
+/api/* /api/index.html 200
+
+# Main app catch-all
+/* /index.html 200
