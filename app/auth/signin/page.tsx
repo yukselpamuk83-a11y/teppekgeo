@@ -1,18 +1,22 @@
 
-import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+'use client';
+
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { SignInForm } from '@/components/auth/signin-form';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+export default function SignInPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-export default async function SignInPage() {
-  const session = await getServerSession(authOptions);
-
-  if (session) {
-    redirect('/');
-  }
+  useEffect(() => {
+    if (session) {
+      router.push('/');
+    }
+  }, [session, router]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
