@@ -21,4 +21,4 @@ npm run dev
 ```bash
 npx prisma generate
 npm run dev
-```
+```# TeppekGeo - Production Ready
