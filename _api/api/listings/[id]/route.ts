@@ -6,7 +6,6 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const dynamic = 'force-dynamic';
 
 // GET: Fetch specific listing
 export async function GET(

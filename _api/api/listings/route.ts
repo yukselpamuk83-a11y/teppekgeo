@@ -7,7 +7,6 @@ import { JobBucket } from '@/lib/adzuna';
 
 const prisma = new PrismaClient();
 
-export const dynamic = 'force-dynamic';
 
 // GET: Fetch all listings with filters
 export async function GET(req: NextRequest) {

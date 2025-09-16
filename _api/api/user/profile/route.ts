@@ -7,7 +7,6 @@ import bcryptjs from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
-export const dynamic = 'force-dynamic';
 
 // GET: Fetch user profile
 export async function GET(req: NextRequest) {

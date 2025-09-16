@@ -6,7 +6,6 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const dynamic = 'force-dynamic';
 
 async function checkAdminAccess(session: any) {
   if (!session?.user?.email) return false;

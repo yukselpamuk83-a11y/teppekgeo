@@ -4,7 +4,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { uploadFile } from '@/lib/s3';
 
-export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {

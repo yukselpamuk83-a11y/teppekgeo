@@ -2,7 +2,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { JobBucket } from '@/lib/adzuna';
 
-export const dynamic = 'force-dynamic';
 
 // GET: Fetch Adzuna jobs from bucket/cache
 export async function GET(req: NextRequest) {

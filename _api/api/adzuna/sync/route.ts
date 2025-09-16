@@ -2,7 +2,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AdzunaService } from '@/lib/adzuna';
 
-export const dynamic = 'force-dynamic';
 
 // Initial sync - 20 days data
 export async function POST(req: NextRequest) {

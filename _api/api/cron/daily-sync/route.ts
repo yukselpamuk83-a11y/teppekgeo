@@ -2,8 +2,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AdzunaService } from '@/lib/adzuna';
 
-export const dynamic = 'force-dynamic';
-
 // Daily sync cron job - should be called by external cron service
 export async function GET(req: NextRequest) {
   try {
