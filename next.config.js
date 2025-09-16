@@ -16,6 +16,10 @@ const nextConfig = {
   webpack: (config) => {
     config.cache = false;
     return config;
+  },
+  // Skip API routes for static export
+  async generateBuildId() {
+    return 'teppekgeo-static';
   }
 };
 
