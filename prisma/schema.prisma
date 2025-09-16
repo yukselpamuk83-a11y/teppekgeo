@@ -1,0 +1,237 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// NextAuth tabloları
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Kullanıcı ve abonelik yönetimi
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String?
+  firstName     String?
+  lastName      String?
+  phone         String?
+  companyName   String?
+  emailVerified DateTime?
+  image         String?
+  
+  // Abonelik bilgileri
+  subscriptionType String @default("FREE") // FREE, PREMIUM, GOLD
+  subscriptionEnd  DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  accounts     Account[]
+  sessions     Session[]
+  jobListings  JobListing[]
+  cvListings   CvListing[]
+  goldListings GoldListing[]
+  advertisements Advertisement[]
+}
+
+// İş ilanları (Turkuaz marker)
+model JobListing {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  company     String
+  location    String
+  latitude    Float
+  longitude   Float
+  salary      String?
+  jobType     String   // Full-time, Part-time, Contract, etc.
+  sector      String   // Technology, Healthcare, Finance, etc.
+  experience  String   // Entry, Mid-level, Senior
+  
+  // İletişim bilgileri
+  contactEmail String
+  contactPhone String?
+  applyUrl     String?
+  
+  isActive    Boolean  @default(true)
+  isPremium   Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  expiresAt   DateTime
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// CV/Tanıtım mesajları (Turuncu marker)
+model CvListing {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  profession  String
+  skills      String   @db.Text
+  experience  String
+  location    String
+  latitude    Float
+  longitude   Float
+  
+  // İletişim bilgileri
+  contactEmail String
+  contactPhone String?
+  linkedinUrl  String?
+  portfolioUrl String?
+  
+  isActive    Boolean  @default(true)
+  isPremium   Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  expiresAt   DateTime
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Altın ilanlar (Altın marker)
+model GoldListing {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  type        String   // JOB, CV, BUSINESS, EVENT
+  location    String
+  latitude    Float
+  longitude   Float
+  
+  // İletişim bilgileri
+  contactEmail String
+  contactPhone String?
+  website      String?
+  
+  // Özel alanlar
+  priority     Int      @default(5) // 1-10 öncelik
+  
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  expiresAt   DateTime
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Reklam alanları
+model Advertisement {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   @db.Text
+  imageUrl    String?
+  linkUrl     String?
+  
+  // Konum bilgileri (belirli bölgelerde gösterim için)
+  regions     String[] // Ülke/şehir kodları array olarak
+  
+  // Görüntülenme bilgileri
+  impressions Int      @default(0)
+  clicks      Int      @default(0)
+  
+  isActive    Boolean  @default(true)
+  
+  startDate   DateTime @default(now())
+  endDate     DateTime
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Adzuna'dan çekilen iş ilanları (Mavi marker)
+model AdzunaJob {
+  id            String   @id @default(cuid())
+  adzunaId      String   @unique // Adzuna'dan gelen unique ID
+  title         String
+  description   String   @db.Text
+  company       String
+  location      String
+  latitude      Float?
+  longitude     Float?
+  
+  // Maaş bilgileri (sadece maaşlı ilanlar çekilecek)
+  salaryMin     Float?
+  salaryMax     Float?
+  salaryCurrency String? // USD, EUR, TRY, etc.
+  
+  // İş detayları (JobListing ile uyumlu)
+  jobType       String?  // Full-time, Part-time, Contract, etc.
+  sector        String?  // Technology, Healthcare, Finance, etc.
+  experience    String?  // Entry, Mid-level, Senior
+  
+  // Kategori ve ülke bilgisi
+  category      String?
+  country       String   // tr, us, uk, etc.
+  
+  // İletişim ve başvuru bilgileri
+  contactEmail  String?
+  contactPhone  String?
+  applyUrl      String?  // Başvuru linki (Adzuna'dan gelen)
+  redirectUrl   String   // Adzuna redirect URL'i
+  
+  // Zaman bilgileri (JobListing ile uyumlu)
+  createdAt     DateTime @default(now()) // Database kayıt tarihi
+  updatedAt     DateTime @updatedAt @default(now()) // Database güncelleme tarihi
+  adzunaCreated DateTime // Adzuna'da oluşturulma tarihi
+  fetchedAt     DateTime @default(now()) // Bizim çektiğimiz tarih
+  expiresAt     DateTime? // İlanın son geçerlilik tarihi
+  
+  // Durum bilgileri
+  isActive      Boolean  @default(true)
+  isPremium     Boolean  @default(false) // Adzuna sponsored job'ları için
+  
+  // Indexes for performance
+  @@index([country])
+  @@index([category])
+  @@index([createdAt])
+  @@index([isActive])
+  @@index([fetchedAt])
+  @@index([adzunaCreated])
+}

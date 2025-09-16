@@ -1,0 +1,522 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Leaflet harita container z-index ayarları */
+.leaflet-container {
+  z-index: 1 !important;
+}
+
+.leaflet-control-container {
+  z-index: 10 !important;
+}
+
+.leaflet-popup-pane {
+  z-index: 70 !important;
+}
+
+.leaflet-tooltip-pane {
+  z-index: 65 !important;
+}
+
+/* 2025 Buton Trendleri */
+
+/* Glassmorphism efektleri */
+.glass-button {
+  backdrop-filter: blur(20px) saturate(180%);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.2), 
+    rgba(255, 255, 255, 0.1)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 
+    0 16px 40px rgba(31, 38, 135, 0.08),
+    0 8px 24px rgba(31, 38, 135, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-button:hover {
+  backdrop-filter: blur(25px) saturate(200%);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.3), 
+    rgba(255, 255, 255, 0.15)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 24px 60px rgba(31, 38, 135, 0.12),
+    0 12px 32px rgba(31, 38, 135, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+  backdrop-filter: blur(25px) saturate(180%);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.12), 
+    rgba(255, 255, 255, 0.08)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 
+    0 20px 60px rgba(31, 38, 135, 0.06),
+    0 10px 30px rgba(31, 38, 135, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Glassmorphism Input */
+.glass-input {
+  backdrop-filter: blur(20px) saturate(150%);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1), 
+    rgba(255, 255, 255, 0.05)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 
+    inset 0 2px 8px rgba(31, 38, 135, 0.1),
+    0 4px 16px rgba(31, 38, 135, 0.05);
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  backdrop-filter: blur(25px) saturate(170%);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.15), 
+    rgba(255, 255, 255, 0.08)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    inset 0 2px 8px rgba(31, 38, 135, 0.15),
+    0 8px 24px rgba(31, 38, 135, 0.08),
+    0 0 0 3px rgba(20, 184, 166, 0.2);
+}
+
+/* Minimal 3D butonlar */
+.button-3d {
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.25s ease;
+}
+
+.button-3d:hover {
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    inset 0 2px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.button-3d:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Türkuaz tema butonlar - Glassmorphism (İş İlanları) */
+.button-teal {
+  backdrop-filter: blur(20px) saturate(180%);
+  background: linear-gradient(135deg, 
+    rgba(20, 184, 166, 0.7), 
+    rgba(13, 148, 136, 0.5)
+  );
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(20, 184, 166, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.button-teal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.button-teal:hover::before {
+  left: 100%;
+}
+
+.button-teal:hover {
+  backdrop-filter: blur(25px) saturate(200%);
+  background: linear-gradient(135deg, 
+    rgba(13, 148, 136, 0.8), 
+    rgba(15, 118, 110, 0.6)
+  );
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 48px rgba(20, 184, 166, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+.button-teal.active {
+  backdrop-filter: blur(15px) saturate(150%);
+  background: linear-gradient(135deg, 
+    rgba(15, 118, 110, 0.9), 
+    rgba(13, 148, 136, 0.7)
+  );
+  box-shadow: 
+    inset 0 4px 8px rgba(0, 0, 0, 0.2),
+    0 8px 32px rgba(20, 184, 166, 0.2);
+}
+
+/* Turuncu tema butonlar - Glassmorphism (CV/Tanıtım) */
+.button-orange {
+  backdrop-filter: blur(20px) saturate(180%);
+  background: linear-gradient(135deg, 
+    rgba(249, 115, 22, 0.7), 
+    rgba(234, 88, 12, 0.5)
+  );
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(249, 115, 22, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.button-orange::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.button-orange:hover::before {
+  left: 100%;
+}
+
+.button-orange:hover {
+  backdrop-filter: blur(25px) saturate(200%);
+  background: linear-gradient(135deg, 
+    rgba(234, 88, 12, 0.8), 
+    rgba(220, 38, 38, 0.6)
+  );
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 48px rgba(249, 115, 22, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+.button-orange.active {
+  backdrop-filter: blur(15px) saturate(150%);
+  background: linear-gradient(135deg, 
+    rgba(220, 38, 38, 0.9), 
+    rgba(234, 88, 12, 0.7)
+  );
+  box-shadow: 
+    inset 0 4px 8px rgba(0, 0, 0, 0.2),
+    0 8px 32px rgba(249, 115, 22, 0.2);
+}
+
+/* Altın tema butonlar - Glassmorphism (Gold İlanlar) */
+.button-gold {
+  backdrop-filter: blur(20px) saturate(180%);
+  background: linear-gradient(135deg, 
+    rgba(234, 179, 8, 0.7), 
+    rgba(245, 158, 11, 0.5)
+  );
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(234, 179, 8, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.button-gold::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.button-gold:hover::before {
+  left: 100%;
+}
+
+.button-gold:hover {
+  backdrop-filter: blur(25px) saturate(200%);
+  background: linear-gradient(135deg, 
+    rgba(245, 158, 11, 0.8), 
+    rgba(217, 119, 6, 0.6)
+  );
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 48px rgba(234, 179, 8, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+.button-gold.active {
+  backdrop-filter: blur(15px) saturate(150%);
+  background: linear-gradient(135deg, 
+    rgba(217, 119, 6, 0.9), 
+    rgba(245, 158, 11, 0.7)
+  );
+  box-shadow: 
+    inset 0 4px 8px rgba(0, 0, 0, 0.2),
+    0 8px 32px rgba(234, 179, 8, 0.2);
+}
+
+/* Ripple efekti */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Glassmorphism text efekti */
+.glass-text {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.025em;
+}
+
+/* Mikro animasyonlar */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.bounce-animation {
+  animation: bounce 2s infinite;
+}
+
+/* Neumorphism 2.0 */
+.neumorphic {
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+  box-shadow: 
+    20px 20px 60px #c0c0c0,
+    -20px -20px 60px #ffffff;
+}
+
+.neumorphic-inset {
+  background: linear-gradient(145deg, #d0d0d0, #f0f0f0);
+  box-shadow: 
+    inset 20px 20px 60px #c0c0c0,
+    inset -20px -20px 60px #ffffff;
+}
+
+/* Dark mode neumorphism */
+.dark .neumorphic {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  box-shadow: 
+    20px 20px 60px #0a0a0a,
+    -20px -20px 60px #3a3a3a;
+}
+
+/* Cyber-gradient tema */
+.cyber-gradient {
+  background: linear-gradient(135deg, 
+    #667eea 0%, 
+    #764ba2 25%, 
+    #f093fb 50%, 
+    #f5576c 75%, 
+    #4facfe 100%);
+  background-size: 300% 300%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hover efektleri */
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-shadow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Modern card - Enhanced Glassmorphism */
+.modern-card {
+  backdrop-filter: blur(20px) saturate(200%);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.15), 
+    rgba(255, 255, 255, 0.05)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 
+    0 16px 64px rgba(31, 38, 135, 0.08),
+    0 8px 32px rgba(31, 38, 135, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.modern-card:hover {
+  backdrop-filter: blur(25px) saturate(220%);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.25), 
+    rgba(255, 255, 255, 0.1)
+  );
+  transform: translateY(-2px);
+  box-shadow: 
+    0 24px 80px rgba(31, 38, 135, 0.12),
+    0 12px 40px rgba(31, 38, 135, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Selection button grup */
+.button-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.selection-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Smooth transitions */
+* {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
