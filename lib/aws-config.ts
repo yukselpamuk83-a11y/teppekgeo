@@ -9,7 +9,12 @@ export interface BucketConfig {
 export function getBucketConfig(): BucketConfig {
   const bucketName = process.env.AWS_BUCKET_NAME;
   if (!bucketName) {
-    throw new Error('AWS_BUCKET_NAME environment variable is required');
+    // Return a default config for build time
+    console.warn('AWS_BUCKET_NAME not found, using default config');
+    return {
+      bucketName: 'default-bucket',
+      folderPrefix: ''
+    };
   }
 
   return {

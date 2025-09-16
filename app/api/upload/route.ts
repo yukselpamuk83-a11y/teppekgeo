@@ -8,6 +8,14 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
+    // Check if AWS is configured
+    if (!process.env.AWS_BUCKET_NAME) {
+      return NextResponse.json(
+        { success: false, error: 'Dosya yükleme servisi şu anda kullanılamıyor' },
+        { status: 503 }
+      );
+    }
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json(
