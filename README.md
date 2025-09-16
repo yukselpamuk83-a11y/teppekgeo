@@ -1,11 +1,12 @@
 # TeppekGeo
 
-İş ilanları harita platformu
+İş ilanları harita platformu - Production Ready
 
 ## Kurulum
 
 ```bash
-npm install
+npm install --legacy-peer-deps
+npx prisma generate
 npm run dev
 ```
 
@@ -15,10 +16,17 @@ npm run dev
 - TypeScript
 - Prisma
 - Leaflet
+- React Leaflet
+- Tailwind CSS
+- NextAuth
 
 ## Çalıştırma
 
 ```bash
 npx prisma generate
 npm run dev
-```# TeppekGeo - Production Ready
+```
+
+## Deployment
+
+Site Cloudflare Pages üzerinde canlı: https://teppekgeo.pages.dev
