@@ -140,8 +140,8 @@ export default function LeafletMap({
           (map.options as any).preferCanvas = true; // Canvas rendering for better performance
           (map.options as any).tap = false; // Disable tap handler on mobile for performance
 
-          // Tile layer - OpenStreetMap sokak görünümü
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          // Tile layer - Cloudflare'de cache'lenmiş harita
+          L.tileLayer('/api/map/tiles?z={z}&x={x}&y={y}&type=street', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             noWrap: true,
             maxZoom: 19,
@@ -192,10 +192,10 @@ export default function LeafletMap({
           }
         });
 
-        // Yeni tile layer ekle
+        // Yeni tile layer ekle - Cloudflare cache'den
         const tileUrl = mapLayers === 'satellite'
-          ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-          : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+          ? '/api/map/tiles?z={z}&x={x}&y={y}&type=satellite'
+          : '/api/map/tiles?z={z}&x={x}&y={y}&type=street';
 
         const attribution = mapLayers === 'satellite'
           ? '&copy; <a href="http://www.esri.com/">Esri</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
