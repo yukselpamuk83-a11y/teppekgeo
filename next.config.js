@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  distDir: 'out',
+  // Remove static export to enable API routes
+  // output: 'export',
+  // distDir: 'out',
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -17,9 +18,9 @@ const nextConfig = {
     config.cache = false;
     return config;
   },
-  // Skip API routes for static export
+  // Custom build ID for tracking
   async generateBuildId() {
-    return 'teppekgeo-static';
+    return 'teppekgeo-dynamic';
   }
 };
 
