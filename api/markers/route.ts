@@ -8,8 +8,23 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const type = searchParams.get('type'); // job, cv, gold
+    const type = searchParams.get('type'); // job, cv, gold, adzuna
     const bounds = searchParams.get('bounds'); // "lat1,lng1,lat2,lng2"
+    const limit = parseInt(searchParams.get('limit') || '1000'); // Max markers
+    const zoom = parseInt(searchParams.get('zoom') || '6'); // Zoom seviyesi
+
+    // Cache key oluştur
+    const cacheKey = `markers_${type || 'all'}_${bounds || 'world'}_${limit}_${zoom}`;
+
+    // Zoom seviyesine göre cache süresi ayarla
+    const getCacheMaxAge = (zoomLevel: number) => {
+      if (zoomLevel <= 4) return 3600; // 1 saat (dünya görünümü)
+      if (zoomLevel <= 8) return 1800; // 30 dakika (ülke görünümü)
+      if (zoomLevel <= 12) return 900; // 15 dakika (şehir görünümü)
+      return 300; // 5 dakika (detay görünümü)
+    };
+
+    const cacheMaxAge = getCacheMaxAge(zoom);
     
     let markers: any[] = [];
 
@@ -212,11 +227,25 @@ export async function GET(req: NextRequest) {
       success: true,
       markers,
       total: markers.length,
+      bounds: bounds || 'world',
+      zoom: zoom,
+      cached: true,
+      cacheKey: cacheKey,
+      timestamp: new Date().toISOString(),
       counts: {
         jobs: markers.filter(m => m.type === 'job').length,
         cvs: markers.filter(m => m.type === 'cv').length,
         gold: markers.filter(m => m.type === 'gold').length,
         adzuna: markers.filter(m => m.type === 'adzuna').length
+      }
+    }, {
+      headers: {
+        // Cloudflare cache ayarları
+        'Cache-Control': `public, max-age=${cacheMaxAge}, s-maxage=${cacheMaxAge}`,
+        'CDN-Cache-Control': `max-age=${cacheMaxAge}`,
+        'Cloudflare-CDN-Cache-Control': `max-age=${cacheMaxAge}`,
+        'Vary': 'Accept-Encoding',
+        'X-Cache-Key': cacheKey
       }
     });
 
