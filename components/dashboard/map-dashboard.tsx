@@ -17,7 +17,7 @@ export function MapDashboard() {
   const [markers, setMarkers] = useState<MapMarker[]>([]); // Filtrelenmiş markerlar
   const [selectedMarkerId, setSelectedMarkerId] = useState<string>();
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
-  const [isListingsOpen, setIsListingsOpen] = useState(true); // İlanları default olarak açık yap
+  const [isListingsOpen, setIsListingsOpen] = useState(false); // İlanları default olarak kapalı yap
   const [mapCenter, setMapCenter] = useState<[number, number]>([39.9334, 32.8597]);
   const [mapZoom, setMapZoom] = useState(6);
   const [loading, setLoading] = useState(true);
